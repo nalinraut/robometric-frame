@@ -1,0 +1,101 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vla-metrics"
+version = "0.1.0"
+description = "TorchMetrics-based evaluation metrics for Vision-Language-Action (VLA) models in robotics"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Ameya Wagh", email = "ameya@example.com"}
+]
+keywords = ["robotics", "vla", "metrics", "evaluation", "vision-language-action", "torchmetrics"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=1.10.0",
+    "torchmetrics>=0.11.0",
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+    "pylint>=3.0.0",
+    "interrogate>=1.5.0",
+]
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ameyawagh/vla-metrics"
+Documentation = "https://github.com/ameyawagh/vla-metrics"
+Repository = "https://github.com/ameyawagh/vla-metrics"
+Issues = "https://github.com/ameyawagh/vla-metrics/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=vla_metrics --cov-report=term-missing"
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = ["E", "F", "I", "N", "W", "B", "C4", "UP"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pylint.main]
+max-line-length = 100
+good-names = ["i", "j", "k", "x", "y", "z", "t", "sr", "cr", "op", "rf", "il", "ct", "mu", "pl", "ps", "cc", "lr", "fp", "fn", "tp", "tn"]
+
+[tool.pylint.messages_control]
+disable = [
+    "C0114",  # missing-module-docstring (handled by ruff)
+    "C0115",  # missing-class-docstring (handled by ruff)
+    "C0116",  # missing-function-docstring (handled by ruff)
+    "R0903",  # too-few-public-methods
+    "W0212",  # protected-access
+]
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+fail-under = 80
+verbose = 1
+exclude = ["tests", "examples", "docs"]

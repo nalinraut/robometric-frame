@@ -1,0 +1,69 @@
+# Pre-commit hooks for code quality
+# See https://pre-commit.com for more information
+
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # Black formatter
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.8
+        args: ['--line-length=100']
+
+  # Ruff linter (fast Python linter)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: ruff
+        args: ['--fix', '--exit-non-zero-on-fix']
+
+  # Pylint
+  - repo: https://github.com/pycqa/pylint
+    rev: v3.0.3
+    hooks:
+      - id: pylint
+        args:
+          - --max-line-length=100
+          - --disable=C0114,C0115,C0116  # Missing docstrings (handled by ruff)
+          - --disable=R0903  # Too few public methods
+          - --disable=W0212  # Access to protected member
+          - --good-names=i,j,k,x,y,z,t,sr,cr,op,rf,il,ct,mu,pl,ps,cc,lr,fp,fn,tp,tn
+        additional_dependencies:
+          - torch
+          - torchmetrics
+          - numpy
+
+  # MyPy type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        args: ['--ignore-missing-imports', '--python-version=3.8']
+        additional_dependencies:
+          - torch
+          - torchmetrics
+          - numpy
+          - types-setuptools
+
+  # Check docstring coverage (optional)
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.5.0
+    hooks:
+      - id: interrogate
+        args: [--verbose, --fail-under=80, --ignore-init-module, --ignore-init-method]
+        exclude: ^(tests/|examples/)
