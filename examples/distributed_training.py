@@ -67,7 +67,7 @@ def batch_evaluation_example() -> None:
 
         for batch_idx in range(batches_per_epoch):
             # Simulate batch of task results
-            batch_size = torch.randint(3, 8, (1,)).item()
+            batch_size = int(torch.randint(3, 8, (1,)).item())
             batch_results = torch.randint(0, 2, (batch_size,))
 
             # Update both running metric and epoch metric

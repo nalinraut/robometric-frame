@@ -63,6 +63,10 @@ class SuccessRate(Metric):
     # Metric states that persist across updates
     full_state_update: bool = False
 
+    # Dynamically added by add_state() in __init__
+    total_success: Tensor
+    total_tasks: Tensor
+
     def __init__(
         self,
         threshold: Optional[float] = None,
@@ -76,10 +80,10 @@ class SuccessRate(Metric):
         self.ignore_index = ignore_index
 
         # Add metric states for distributed computation
-        self.add_state("total_success", default=torch.tensor(0), dist_reduce_fx="sum")
-        self.add_state("total_tasks", default=torch.tensor(0), dist_reduce_fx="sum")
+        self.add_state("total_success", default=torch.tensor(0.0), dist_reduce_fx="sum")
+        self.add_state("total_tasks", default=torch.tensor(0.0), dist_reduce_fx="sum")
 
-    def update(self, success: Tensor) -> None:
+    def update(self, success: Tensor) -> None:  # pylint: disable=arguments-differ
         """Update metric state with new success indicators.
 
         Args:
@@ -114,8 +118,8 @@ class SuccessRate(Metric):
                 )
 
         # Update states
-        self.total_success += success.sum()
-        self.total_tasks += success.numel()
+        self.total_success += success.sum()  # pylint: disable=no-member
+        self.total_tasks += success.numel()  # pylint: disable=no-member
 
     def compute(self) -> Tensor:
         """Compute the final Success Rate.
@@ -126,17 +130,13 @@ class SuccessRate(Metric):
         Raises:
             RuntimeError: If no tasks have been recorded (total_tasks == 0).
         """
-        if self.total_tasks == 0:
+        if self.total_tasks == 0:  # pylint: disable=no-member
             raise RuntimeError(
                 "Cannot compute success rate: no tasks have been recorded. "
                 "Call update() with success indicators before compute()."
             )
 
-        return self.total_success.float() / self.total_tasks
-
-    def reset(self) -> None:
-        """Reset metric states to default values."""
-        super().reset()
+        return self.total_success.float() / self.total_tasks  # pylint: disable=no-member
 
 
 class TaskSuccessRate(SuccessRate):
@@ -144,5 +144,3 @@ class TaskSuccessRate(SuccessRate):
 
     This class provides a more descriptive name for the same functionality.
     """
-
-    pass

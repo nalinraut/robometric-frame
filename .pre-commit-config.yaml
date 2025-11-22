@@ -22,7 +22,6 @@ repos:
     rev: 23.12.1
     hooks:
       - id: black
-        language_version: python3.8
         args: ['--line-length=100']
 
   # Ruff linter (fast Python linter)
@@ -43,6 +42,7 @@ repos:
           - --disable=R0903  # Too few public methods
           - --disable=W0212  # Access to protected member
           - --good-names=i,j,k,x,y,z,t,sr,cr,op,rf,il,ct,mu,pl,ps,cc,lr,fp,fn,tp,tn
+        exclude: ^tests/
         additional_dependencies:
           - torch
           - torchmetrics
@@ -53,7 +53,8 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        args: ['--ignore-missing-imports', '--python-version=3.8']
+        args: ['--ignore-missing-imports', '--python-version=3.9']
+        exclude: ^tests/
         additional_dependencies:
           - torch
           - torchmetrics

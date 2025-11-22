@@ -52,7 +52,7 @@ def main() -> None:
     # Simulate task completion scores (0.0 to 1.0)
     task_scores = torch.tensor([0.95, 0.75, 0.85, 0.60, 0.92, 0.78, 0.88])
     print(f"Task scores: {task_scores.tolist()}")
-    print(f"Threshold: 0.8")
+    print("Threshold: 0.8")
 
     metric_threshold.update(task_scores)
     success_rate = metric_threshold.compute()
@@ -77,7 +77,7 @@ def main() -> None:
 
     overall_sr = metric_pickup.compute()
     print(f"\nOverall Pick-up Success Rate: {overall_sr:.2%}")
-    print(f"(Compared to RT-1-400k: 34.4% on pick-up tasks)")
+    print("(Compared to RT-1-400k: 34.4% on pick-up tasks)")
 
 
 if __name__ == "__main__":
