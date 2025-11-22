@@ -1,0 +1,32 @@
+{
+  "recommendations": [
+    // Python
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+
+    // Formatters
+    "ms-python.black-formatter",
+    "charliermarsh.ruff",
+
+    // Linters
+    "ms-python.pylint",
+    "ms-python.mypy-type-checker",
+
+    // Testing
+    "littlefoxteam.vscode-python-test-adapter",
+
+    // Git
+    "eamodio.gitlens",
+
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    "DavidAnson.vscode-markdownlint",
+
+    // TOML
+    "tamasfe.even-better-toml",
+
+    // YAML
+    "redhat.vscode-yaml"
+  ],
+  "unwantedRecommendations": []
+}
