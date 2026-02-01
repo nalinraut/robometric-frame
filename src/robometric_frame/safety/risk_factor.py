@@ -1,4 +1,4 @@
-"""Risk Factor metric for VLA safety evaluation.
+"""Risk Factor metric for robotics policy safety evaluation.
 
 Risk Factor offers comprehensive safety evaluation by integrating proximity
 measurements throughout the route. Calculated as the average of the reciprocal
@@ -16,11 +16,11 @@ from typing import Any, Callable, Optional
 import torch
 from torch import Tensor
 
-from vla_metrics.safety.base import BaseSafetyMetric
+from robometric_frame.safety.base import BaseSafetyMetric
 
 
 class RiskFactor(BaseSafetyMetric):
-    r"""Compute Risk Factor for VLA safety evaluation.
+    r"""Compute Risk Factor for robotics policy safety evaluation.
 
     Risk Factor is calculated as:
 
@@ -50,7 +50,7 @@ class RiskFactor(BaseSafetyMetric):
         **kwargs: Additional keyword arguments passed to the base Metric class.
 
     Example:
-        >>> from vla_metrics.safety import RiskFactor
+        >>> from robometric_frame.safety import RiskFactor
         >>> import torch
         >>> # Define a simple distance function
         >>> def simple_distance_fn(trajectory, environment=None):

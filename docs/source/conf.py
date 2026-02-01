@@ -12,15 +12,15 @@ from typing import Any
 sys.path.insert(0, os.path.abspath("../../src"))
 
 # Import version from package (which reads from pyproject.toml)
-import vla_metrics  # noqa: E402
+import robometric_frame  # noqa: E402
 
 # -- Project information -----------------------------------------------------
-project = "VLA Metrics"
+project = "FRAME: Framework for Robotic Action and Motion Evaluation"
 copyright = "2025, Ameya Wagh"
 author = "Ameya Wagh"
-# Version is read from pyproject.toml via vla_metrics.__version__
-version = vla_metrics.__version__
-release = vla_metrics.__version__
+# Version is read from pyproject.toml via robometric_frame.__version__
+version = robometric_frame.__version__
+release = robometric_frame.__version__
 
 # -- General configuration ---------------------------------------------------
 extensions = [
@@ -103,9 +103,30 @@ html_theme_options = {
     "titles_only": False,
 }
 
-html_static_path: list[str] = []  # No static files for now
+html_static_path: list[str] = []
 html_logo = None
 html_favicon = None
+
+
+def setup(app: Any) -> None:
+    """Copy logo to build output during build."""
+    import shutil
+    from pathlib import Path
+
+    def copy_logo(app: Any, exception: Any) -> None:
+        if exception is not None:
+            return
+        # Source: docs/frame-logo.png (relative to project root)
+        src = Path(__file__).parent.parent / "frame-logo.png"
+        # Destination: {outdir}/docs/frame-logo.png
+        dst_dir = Path(app.outdir) / "docs"
+        dst_dir.mkdir(parents=True, exist_ok=True)
+        dst = dst_dir / "frame-logo.png"
+        if src.exists():
+            shutil.copy2(src, dst)
+
+    app.connect("build-finished", copy_logo)
+
 
 # -- Options for LaTeX output ------------------------------------------------
 latex_elements: dict[str, Any] = {
@@ -145,7 +166,7 @@ latex_elements: dict[str, Any] = {
 """,
 }
 latex_documents = [
-    ("index", "vla-metrics.tex", "VLA Metrics Documentation", "Ameya Wagh", "manual"),
+    ("index", "robometric-frame.tex", "FRAME Documentation", "Ameya Wagh", "manual"),
 ]
 
 # Tell Sphinx to not include SVG images in LaTeX builds
@@ -153,17 +174,17 @@ latex_show_urls = "footnote"
 latex_show_pagerefs = True
 
 # -- Options for manual page output ------------------------------------------
-man_pages = [("index", "vla-metrics", "VLA Metrics Documentation", [author], 1)]
+man_pages = [("index", "robometric-frame", "FRAME Documentation", [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 texinfo_documents = [
     (
         "index",
-        "vla-metrics",
-        "VLA Metrics Documentation",
+        "robometric-frame",
+        "FRAME Documentation",
         author,
-        "vla-metrics",
-        "TorchMetrics-based evaluation metrics for VLA models",
+        "robometric-frame",
+        "TorchMetrics-based evaluation metrics for robotics policies",
         "Miscellaneous",
     ),
 ]

@@ -1,4 +1,4 @@
-"""Absolute Trajectory Error (ATE) metric for VLA trajectory evaluation.
+"""Absolute Trajectory Error (ATE) metric for robotics policy trajectory evaluation.
 
 ATE measures the global consistency between predicted and reference trajectories
 by computing the average point-to-point Euclidean distance.
@@ -21,7 +21,7 @@ from torchmetrics import Metric
 
 
 class AbsoluteTrajectoryError(Metric):
-    r"""Compute Absolute Trajectory Error (ATE) for VLA trajectory evaluation.
+    r"""Compute Absolute Trajectory Error (ATE) for robotics policy trajectory evaluation.
 
     ATE is calculated as:
         ATE = (1/L) * Σ(i=1 to L) \|p_i - p_i*\|_2
@@ -41,7 +41,7 @@ class AbsoluteTrajectoryError(Metric):
         **kwargs: Additional keyword arguments passed to the base Metric class.
 
     Example:
-        >>> from vla_metrics.trajectory_quality import AbsoluteTrajectoryError
+        >>> from robometric_frame.trajectory_quality import AbsoluteTrajectoryError
         >>> import torch
         >>> metric = AbsoluteTrajectoryError()
         >>> # Perfect prediction (zero error)

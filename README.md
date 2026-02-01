@@ -1,14 +1,22 @@
-# VLA Metrics
+<p align="center">
+  <img src="docs/frame-logo.png" alt="FRAME Logo" width="600">
+</p>
 
-[![CI](https://github.com/ameyawagh/vla-metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/ameyawagh/vla-metrics/actions/workflows/ci.yml)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<h1 align="center">FRAME: Framework for Robotic Action and Motion Evaluation</h1>
 
-TorchMetrics-based evaluation metrics for Vision-Language-Action (VLA) models in robotics.
+<p align="center">
+  <a href="https://github.com/ameyawagh/robometric-frame/actions/workflows/ci.yml"><img src="https://github.com/ameyawagh/robometric-frame/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  <em>TorchMetrics-based evaluation metrics for robotics policies and robot learning models.</em>
+</p>
 
 ## Overview
 
-`vla-metrics` provides a comprehensive suite of evaluation metrics specifically designed for Vision-Language-Action models in robotics. Built on top of [TorchMetrics](https://torchmetrics.readthedocs.io/), it offers:
+`robometric-frame` provides a comprehensive suite of evaluation metrics specifically designed for robotics policies, including learned controllers, imitation learning models, and reinforcement learning agents. Built on top of [TorchMetrics](https://torchmetrics.readthedocs.io/), it offers:
 
 - **Easy Integration**: Drop-in compatibility with PyTorch, PyTorch Lightning, and Hugging Face
 - **Distributed Training**: Native support for multi-GPU/multi-node training
@@ -20,8 +28,8 @@ TorchMetrics-based evaluation metrics for Vision-Language-Action (VLA) models in
 
 ```bash
 # Install from source
-git clone https://github.com/ameyawagh/vla-metrics.git
-cd vla-metrics
+git clone https://github.com/ameyawagh/robometric-frame.git
+cd robometric-frame
 
 # Using uv (recommended - faster)
 uv venv
@@ -37,7 +45,7 @@ pip install -e .
 
 ```python
 import torch
-from vla_metrics import SuccessRate, PathLength, ActionAccuracy
+from robometric_frame import SuccessRate, PathLength, ActionAccuracy
 
 # Task Performance: Success Rate
 metric = SuccessRate()
@@ -85,7 +93,7 @@ All metrics support distributed training out of the box:
 
 ```python
 import torch.distributed as dist
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
 # Automatically syncs across all processes
 metric = SuccessRate()
@@ -133,7 +141,7 @@ result = metric.compute()  # Result is on GPU
 ### PyTorch Training Loop
 
 ```python
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
 success_metric = SuccessRate()
 
@@ -152,9 +160,9 @@ for epoch in range(num_epochs):
 
 ```python
 import pytorch_lightning as pl
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
-class VLAModel(pl.LightningModule):
+class RobotPolicyModel(pl.LightningModule):
     def __init__(self):
         super().__init__()
         self.val_success_rate = SuccessRate()
@@ -173,7 +181,7 @@ class VLAModel(pl.LightningModule):
 
 ```python
 from transformers import Trainer
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
 def compute_metrics(eval_pred):
     predictions, labels = eval_pred
@@ -193,8 +201,8 @@ trainer = Trainer(
 
 ```bash
 # Clone repository
-git clone https://github.com/ameyawagh/vla-metrics.git
-cd vla-metrics
+git clone https://github.com/ameyawagh/robometric-frame.git
+cd robometric-frame
 
 # Using uv (recommended - faster)
 uv venv
@@ -218,7 +226,7 @@ This installs all development dependencies (including documentation tools) and c
 pytest
 
 # Run with coverage
-pytest --cov=vla_metrics --cov-report=html
+pytest --cov=robometric_frame --cov-report=html
 
 # Run specific test file
 pytest tests/test_success_rate.py -v
@@ -319,11 +327,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you use this library in your research, please cite:
 
 ```bibtex
-@software{vla_metrics,
-  title = {VLA Metrics: Evaluation Metrics for Vision-Language-Action Models},
+@software{robometric_frame,
+  title = {FRAME: Framework for Robotic Action and Motion Evaluation},
   author = {Wagh, Ameya},
   year = {2025},
-  url = {https://github.com/ameyawagh/vla-metrics}
+  url = {https://github.com/ameyawagh/robometric-frame}
 }
 ```
 
@@ -334,4 +342,4 @@ See [docs/metrics.md](docs/metrics.md) for comprehensive references to research 
 ## Acknowledgments
 
 - Built on [TorchMetrics](https://torchmetrics.readthedocs.io/)
-- Inspired by VLA research including RT-1, RT-2, and other robotics transformers
+- Inspired by robotics research including RT-1, RT-2, and other robot learning methods

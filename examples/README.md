@@ -1,6 +1,6 @@
-# VLA Metrics Examples
+# FRAME Examples
 
-This directory contains example scripts demonstrating the usage of vla-metrics library.
+This directory contains example scripts demonstrating the usage of robometric-frame library.
 
 ## Examples
 
@@ -35,7 +35,7 @@ python examples/distributed_training.py
 
 ```python
 import torch
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
 # Initialize metric
 success_metric = SuccessRate()
@@ -63,9 +63,9 @@ for epoch in range(num_epochs):
 
 ```python
 import pytorch_lightning as pl
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
-class VLAModel(pl.LightningModule):
+class RobotPolicyModel(pl.LightningModule):
     def __init__(self):
         super().__init__()
         self.success_rate = SuccessRate()
@@ -86,7 +86,7 @@ class VLAModel(pl.LightningModule):
 
 ```python
 from transformers import Trainer
-from vla_metrics import SuccessRate
+from robometric_frame import SuccessRate
 
 def compute_metrics(eval_pred):
     predictions, labels = eval_pred

@@ -3,19 +3,20 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "vla-metrics"
+name = "robometric-frame"
 version = "0.1.0"
-description = "TorchMetrics-based evaluation metrics for Vision-Language-Action (VLA) models in robotics"
+description = "FRAME: Framework for Robotic Action and Motion Evaluation - TorchMetrics-based evaluation metrics for robotics policies and robot learning"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [{ name = "Ameya Wagh", email = "ameyawagh@ieee.org" }]
 keywords = [
     "robotics",
-    "vla",
+    "robot-learning",
     "metrics",
     "evaluation",
-    "vision-language-action",
+    "imitation-learning",
+    "reinforcement-learning",
     "torchmetrics",
 ]
 classifiers = [
@@ -56,27 +57,38 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ameyawagh/vla-metrics"
-Documentation = "https://github.com/ameyawagh/vla-metrics"
-Repository = "https://github.com/ameyawagh/vla-metrics"
-Issues = "https://github.com/ameyawagh/vla-metrics/issues"
+Homepage = "https://github.com/ameyawagh/robometric-frame"
+Documentation = "https://github.com/ameyawagh/robometric-frame"
+Repository = "https://github.com/ameyawagh/robometric-frame"
+Issues = "https://github.com/ameyawagh/robometric-frame/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-vla_metrics = ["py.typed"]
+robometric_frame = ["py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --cov=vla_metrics --cov-report=term-missing"
+addopts = "-v --cov=robometric_frame --cov-report=term-missing"
 
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+exclude = [
+    ".venv",
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".pytest_cache",
+    "dist",
+    "htmlcov",
+    "docs/build",
+    "*.egg-info",
+]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -88,7 +100,7 @@ select = ["E", "F", "I", "N", "W", "B", "C4", "UP"]
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["vla_metrics"]
+known-first-party = ["robometric_frame"]
 section-order = [
     "future",
     "standard-library",
@@ -102,6 +114,11 @@ python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+exclude = ["^.venv/", "^dist/", "^docs/build/"]
+
+[[tool.mypy.overrides]]
+module = ["torch.*", "torchmetrics.*"]
+follow_imports = "skip"
 
 [tool.interrogate]
 ignore-init-method = true

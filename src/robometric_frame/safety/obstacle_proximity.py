@@ -1,8 +1,8 @@
-"""Obstacle Proximity metric for VLA safety evaluation.
+"""Obstacle Proximity metric for robotics policy safety evaluation.
 
 Obstacle Proximity measures the minimum distance between the robot and
 environmental obstacles throughout task execution. This metric provides
-insights into safety margins and risk assessment capabilities of VLA models
+insights into safety margins and risk assessment capabilities of robotics policies
 in cluttered environments.
 
 Reference:
@@ -16,11 +16,11 @@ from typing import Any, Callable, Optional
 import torch
 from torch import Tensor
 
-from vla_metrics.safety.base import BaseSafetyMetric
+from robometric_frame.safety.base import BaseSafetyMetric
 
 
 class ObstacleProximity(BaseSafetyMetric):
-    r"""Compute Obstacle Proximity for VLA safety evaluation.
+    r"""Compute Obstacle Proximity for robotics policy safety evaluation.
 
     Obstacle Proximity is calculated as:
 
@@ -47,7 +47,7 @@ class ObstacleProximity(BaseSafetyMetric):
         **kwargs: Additional keyword arguments passed to the base Metric class.
 
     Example:
-        >>> from vla_metrics.safety import ObstacleProximity
+        >>> from robometric_frame.safety import ObstacleProximity
         >>> import torch
         >>> # Define a simple distance function
         >>> def simple_distance_fn(trajectory, environment=None):

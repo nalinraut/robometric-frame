@@ -1,4 +1,4 @@
-"""Path Smoothness metric for VLA trajectory evaluation.
+"""Path Smoothness metric for robotics policy trajectory evaluation.
 
 Path Smoothness evaluates the rate of change in trajectory direction, detecting
 oscillations that may arise from velocity changes or directional adjustments.
@@ -20,7 +20,7 @@ from torchmetrics import Metric
 
 
 class PathSmoothness(Metric):
-    r"""Compute Path Smoothness for VLA trajectory evaluation.
+    r"""Compute Path Smoothness for robotics policy trajectory evaluation.
 
     Path Smoothness is calculated as:
         PS = (1/PL) * Σ(i=1 to L-2) \|(p_{i+2} - p_{i+1}) - (p_{i+1} - p_i)\|_2
@@ -40,7 +40,7 @@ class PathSmoothness(Metric):
         **kwargs: Additional keyword arguments passed to the base Metric class.
 
     Example:
-        >>> from vla_metrics.trajectory_quality import PathSmoothness
+        >>> from robometric_frame.trajectory_quality import PathSmoothness
         >>> import torch
         >>> metric = PathSmoothness()
         >>> # Smooth straight line (perfect smoothness = 0)
