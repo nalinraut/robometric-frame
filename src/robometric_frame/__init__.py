@@ -19,9 +19,13 @@ from robometric_frame.task_performance import ActionAccuracy, SuccessRate, TaskC
 from robometric_frame.trajectory_quality import (
     AbsoluteTrajectoryError,
     CurvatureChange,
+    DTWBase,
+    DTWDistance,
+    NormalizedDTW,
     PathLength,
     PathSmoothness,
     RelativeTrajectoryError,
+    SuccessWeightedDTW,
 )
 
 __all__ = [
@@ -29,13 +33,17 @@ __all__ = [
     "ActionAccuracy",
     "CollisionRate",
     "CurvatureChange",
+    "DTWBase",
+    "DTWDistance",
     "InferenceLatency",
     "MemoryUsage",
+    "NormalizedDTW",
     "ObstacleProximity",
     "PathLength",
     "PathSmoothness",
     "RelativeTrajectoryError",
     "RiskFactor",
     "SuccessRate",
+    "SuccessWeightedDTW",
     "TaskCompletionRate",
 ]

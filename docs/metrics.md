@@ -49,6 +49,30 @@ $$ATE = \frac{1}{L}\sum_{i=1}^{L} \|\mathbf{p}_i - \mathbf{p}_i^*\|_2$$
 
 $$RTE = \frac{1}{L-\Delta}\sum_{i=1}^{L-\Delta} \|(\mathbf{p}_{i+\Delta} - \mathbf{p}_i) - (\mathbf{p}_{i+\Delta}^* - \mathbf{p}_i^*)\|_2$$
 
+#### Dynamic Time Warping (DTW)
+
+**DTW Distance** measures the minimum-cost temporal alignment between two trajectories[19]. Unlike MSE or ATE which compare trajectories timestep-by-timestep, DTW finds the optimal warping to align sequences that may differ in length or timing. This is critical for evaluating Vision-Language-Action (VLA) models and policies using action chunking (e.g., ACT, Diffusion Policy), where predicted trajectories may be temporally misaligned with demonstrations.
+
+DTW is computed via dynamic programming on an accumulated cost matrix:
+$$D[i,j] = C[i,j] + \min(D[i-1,j], D[i,j-1], D[i-1,j-1])$$
+
+where $C[i,j] = \|\mathbf{q}_i - \mathbf{r}_j\|_2$ is the Euclidean distance between predicted point $\mathbf{q}_i$ and reference point $\mathbf{r}_j$. The final DTW distance is $D[n-1, m-1]$.
+
+**nDTW (Normalized DTW)** maps the raw DTW distance to a [0, 1] score:
+$$\text{nDTW} = \exp\left(-\frac{\text{DTW}}{|R| \cdot d}\right)$$
+
+where $|R|$ is the reference trajectory length and $d$ is a normalization constant (typically the mean step distance of the reference). Higher nDTW indicates better similarity (1.0 = perfect match).
+
+**SDTW (Success-weighted DTW)** combines trajectory fidelity with task success:
+$$\text{SDTW} = \text{nDTW} \times \text{Success}$$
+
+This captures both "did you succeed?" and "did you follow the right path?" If the task failed, SDTW = 0 regardless of trajectory similarity.
+
+**Use cases:**
+- Evaluating VLA models where predicted trajectories may be temporally misaligned
+- Comparing policies that use action chunking (ACT, Diffusion Policy)
+- Benchmarking across demonstrations with different execution speeds
+
 ### 1.2.3 Vision-Language Alignment Metrics
 
 #### BLEU Score
@@ -147,3 +171,5 @@ $$MU = \max_t(\text{RAM}_t + \text{VRAM}_t)$$
 [17] J. Hartmanis and R. E. Stearns, "On the computational complexity of algorithms," Trans. Am. Math. Soc., vol. 117, p. 285, May 1965.
 
 [18] X.-H. Sun and D. Wang, "APC," Perform. Eval. Rev., vol. 40, pp. 125–130, Oct. 2012.
+
+[19] G. Ilharco, V. Jain, A. Ku, E. Ie, and J. Baldridge, "General Evaluation for Instruction Conditioned Navigation using Dynamic Time Warping," arXiv preprint arXiv:1907.05446, NeurIPS ViGIL Workshop, 2019.
